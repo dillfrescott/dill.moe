@@ -3,7 +3,7 @@
     <title>dill.moe</title>
     <link href="https://dill.moe/feed.xml" rel="self" />
     <link href="https://dill.moe" />
-    <updated>2025-02-14T21:40:44-05:00</updated>
+    <updated>2025-03-19T17:45:43-04:00</updated>
     <author>
         <name>Cross</name>
     </author>
@@ -21,78 +21,12 @@
         <updated>2024-05-26T02:39:00-04:00</updated>
             <summary>
                 <![CDATA[
-                    🎧 Listen to this post ▶ 0:00 / 0:00 🔊 I really&hellip;
+                    I really wanted to take KNOCK YOURSELF OUT XD by Porter Robinson&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                <div class="audio-player" style="background: #1a1a1a; padding: 1.5rem; border-radius: 12px; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
-<div class="align-center" style="color: #e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 1.1rem; margin-bottom: 1rem; letter-spacing: 0.5px;">🎧 Listen to this post</div>
-<audio loading="lazy" id="player" src="https://raw.githubusercontent.com/dillfrescott/dill.moe-audio/main/what-if-porter-robinson-released-knock-yourself-out-xd-in-2021/audio.mp3"></audio>
-<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;"><button id="playBtn" style="background: #4CAF50; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;"> <span id="playIcon">▶</span> </button>
-<div style="color: #fff; font-family: Arial, sans-serif; font-size: 14px;"><span id="currentTime">0:00</span> / <span id="duration">0:00</span></div>
-</div>
-<div id="progressBar" style="background: #333; height: 4px; border-radius: 2px; cursor: pointer; position: relative;">
-<div id="progress" style="background: #4CAF50; height: 100%; width: 0%; border-radius: 2px; transition: width 0.1s linear;"></div>
-</div>
-<!-- Volume Slider -->
-<div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;"><span style="color: #fff; font-size: 14px;">🔊</span> <input id="volumeSlider" style="width: 100%; cursor: pointer;" max="1" min="0" step="0.01" type="range" value="1"></div>
-</div>
-<p>
-<script>
-		const audio = document.getElementById('player');
-		const playBtn = document.getElementById('playBtn');
-		const playIcon = document.getElementById('playIcon');
-		const progress = document.getElementById('progress');
-		const currentTime = document.getElementById('currentTime');
-		const duration = document.getElementById('duration');
-		const progressBar = document.getElementById('progressBar');
-		const volumeSlider = document.getElementById('volumeSlider');
-
-		function formatTime(seconds) {
-			const minutes = Math.floor(seconds / 60);
-			seconds = Math.floor(seconds % 60);
-			return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-		}
-
-		audio.addEventListener('loadedmetadata', () => {
-			duration.textContent = formatTime(audio.duration);
-		});
-
-		audio.addEventListener('timeupdate', () => {
-			const percent = (audio.currentTime / audio.duration) * 100;
-			progress.style.width = percent + '%';
-			currentTime.textContent = formatTime(audio.currentTime);
-		});
-
-		playBtn.addEventListener('click', () => {
-			if (audio.paused) {
-				audio.play();
-				playIcon.textContent = '⏸';
-			} else {
-				audio.pause();
-				playIcon.textContent = '▶';
-			}
-		});
-
-		progressBar.addEventListener('click', (e) => {
-			const rect = progressBar.getBoundingClientRect();
-			const pos = (e.clientX - rect.left) / rect.width;
-			audio.currentTime = pos * audio.duration;
-		});
-
-		audio.addEventListener('ended', () => {
-			playIcon.textContent = '▶';
-			audio.currentTime = 0;
-		});
-
-		// Volume Slider Functionality
-		volumeSlider.addEventListener('input', () => {
-			audio.volume = volumeSlider.value;
-		});
-	</script>
-</p>
-<p>I really wanted to take KNOCK YOURSELF OUT XD by Porter Robinson and add a Nurture/Worlds flare to it. And I finally did just that.</p>
+                <p>I really wanted to take KNOCK YOURSELF OUT XD by Porter Robinson and add a Nurture/Worlds flare to it. And I finally did just that.</p>
 <figure class="post__image" ><img loading="lazy" src="https://dill.moe/media/posts/9/Screenshot-2024-05-26-192637.png" alt="" width="1918" height="1029" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-xs.png 320w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-sm.png 480w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-md.png 768w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-xl.png 1024w">
 <figcaption >The FL Studio Project</figcaption>
 </figure>
@@ -120,78 +54,12 @@
         <updated>2024-02-15T17:14:12-05:00</updated>
             <summary>
                 <![CDATA[
-                    🎧 Listen to this post ▶ 0:00 / 0:00 🔊 The Arnold&hellip;
+                    The Arnold Palmer, a delightful beverage named after the legendary golfer, is&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                <div class="audio-player" style="background: #1a1a1a; padding: 1.5rem; border-radius: 12px; max-width: 500px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
-<div class="align-center" style="color: #e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 1.1rem; margin-bottom: 1rem; letter-spacing: 0.5px;">🎧 Listen to this post</div>
-<audio loading="lazy" id="player" src="https://raw.githubusercontent.com/dillfrescott/dill.moe-audio/main/a-bit-about-arnold-palmer/audio.mp3"></audio>
-<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;"><button id="playBtn" style="background: #4CAF50; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;"> <span id="playIcon">▶</span> </button>
-<div style="color: #fff; font-family: Arial, sans-serif; font-size: 14px;"><span id="currentTime">0:00</span> / <span id="duration">0:00</span></div>
-</div>
-<div id="progressBar" style="background: #333; height: 4px; border-radius: 2px; cursor: pointer; position: relative;">
-<div id="progress" style="background: #4CAF50; height: 100%; width: 0%; border-radius: 2px; transition: width 0.1s linear;"></div>
-</div>
-<!-- Volume Slider -->
-<div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;"><span style="color: #fff; font-size: 14px;">🔊</span> <input id="volumeSlider" style="width: 100%; cursor: pointer;" max="1" min="0" step="0.01" type="range" value="1"></div>
-</div>
-<p>
-<script>
-		const audio = document.getElementById('player');
-		const playBtn = document.getElementById('playBtn');
-		const playIcon = document.getElementById('playIcon');
-		const progress = document.getElementById('progress');
-		const currentTime = document.getElementById('currentTime');
-		const duration = document.getElementById('duration');
-		const progressBar = document.getElementById('progressBar');
-		const volumeSlider = document.getElementById('volumeSlider');
-
-		function formatTime(seconds) {
-			const minutes = Math.floor(seconds / 60);
-			seconds = Math.floor(seconds % 60);
-			return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-		}
-
-		audio.addEventListener('loadedmetadata', () => {
-			duration.textContent = formatTime(audio.duration);
-		});
-
-		audio.addEventListener('timeupdate', () => {
-			const percent = (audio.currentTime / audio.duration) * 100;
-			progress.style.width = percent + '%';
-			currentTime.textContent = formatTime(audio.currentTime);
-		});
-
-		playBtn.addEventListener('click', () => {
-			if (audio.paused) {
-				audio.play();
-				playIcon.textContent = '⏸';
-			} else {
-				audio.pause();
-				playIcon.textContent = '▶';
-			}
-		});
-
-		progressBar.addEventListener('click', (e) => {
-			const rect = progressBar.getBoundingClientRect();
-			const pos = (e.clientX - rect.left) / rect.width;
-			audio.currentTime = pos * audio.duration;
-		});
-
-		audio.addEventListener('ended', () => {
-			playIcon.textContent = '▶';
-			audio.currentTime = 0;
-		});
-
-		// Volume Slider Functionality
-		volumeSlider.addEventListener('input', () => {
-			audio.volume = volumeSlider.value;
-		});
-	</script>
-</p>
-<figure class="post__image"><img loading="lazy"  src="https://dill.moe/media/posts/5/ARNOLD-PALMER-DRINK-2.jpg" alt="" width="276" height="414" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xs.jpg 320w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-sm.jpg 480w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-md.jpg 768w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xl.jpg 1024w"></figure>
+                <figure class="post__image"><img loading="lazy"  src="https://dill.moe/media/posts/5/ARNOLD-PALMER-DRINK-2.jpg" alt="" width="276" height="414" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xs.jpg 320w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-sm.jpg 480w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-md.jpg 768w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xl.jpg 1024w"></figure>
 <p>The Arnold Palmer, a delightful beverage named after the legendary golfer, is a harmonious blend of iced tea and lemonade, creating a symphony of flavors that tantalizes the taste buds and refreshes the spirit. This iconic drink is renowned for its perfect balance of sweetness and tartness, making it an instant favorite among both avid tea drinkers and lemonade enthusiasts alike.</p>
 <p>What makes the Arnold Palmer truly exceptional is its versatility. Whether sipped leisurely on a hot summer day or enjoyed as a revitalizing pick-me-up during any season, this timeless concoction never fails to deliver satisfaction. Its crispness invigorates the senses, while its smooth texture glides over the palate with effortless grace, leaving behind a lingering sensation of pure refreshment.</p>
 <p>Beyond its impeccable taste, the Arnold Palmer carries with it a sense of tradition and nostalgia. Originating as a custom order by Arnold Palmer himself, this beverage has transcended its humble beginnings to become a beloved classic enjoyed by people of all ages across the globe. Its simplicity belies its impact, as it continues to evoke fond memories of lazy afternoons spent with loved ones and cherished moments shared among friends.</p>

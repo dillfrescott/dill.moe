@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+    <title>dill.moe</title>
+    <link href="https://dill.moe/feed.xml" rel="self" />
+    <link href="https://dill.moe" />
+    <updated>2025-03-19T17:45:43-04:00</updated>
+    <author>
+        <name>Cross</name>
+    </author>
+    <id>https://dill.moe</id>
+
+    <entry>
+        <title>What if Porter Robinson released KNOCK YOURSELF OUT XD in 2021?</title>
+        <author>
+            <name>Cross</name>
+        </author>
+        <link href="https://dill.moe/what-if-porter-robinson-released-knock-yourself-out-xd-in-2021/"/>
+        <id>https://dill.moe/what-if-porter-robinson-released-knock-yourself-out-xd-in-2021/</id>
+            <category term="Blog"/>
+
+        <updated>2024-05-26T02:39:00-04:00</updated>
+            <summary>
+                <![CDATA[
+                    I really wanted to take KNOCK YOURSELF OUT XD by Porter Robinson&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>I really wanted to take KNOCK YOURSELF OUT XD by Porter Robinson and add a Nurture/Worlds flare to it. And I finally did just that.</p>
+<figure class="post__image" ><img loading="lazy" src="https://dill.moe/media/posts/9/Screenshot-2024-05-26-192637.png" alt="" width="1918" height="1029" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-xs.png 320w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-sm.png 480w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-md.png 768w ,https://dill.moe/media/posts/9/responsive/Screenshot-2024-05-26-192637-xl.png 1024w">
+<figcaption >The FL Studio Project</figcaption>
+</figure>
+<p><br>The main changes are the addition of the "nurture" voice which is just a pitched up and formant adjusted version of Porter's own voice.</p>
+<p>I layered this with his original voice with tons of mastering and post processing such as vocal doubling and a stereo enhancer on the original base voice.</p>
+<p>To get the stems I used a band-split roformer model, which is a neural network designed to split vocals from instrumentals. I hand adjusted the model's configuration for improved results.</p>
+<p>Another major addition is the subtle but impactful "aaahhhs" added to the chorus and other louder parts of the song. It's sort of a choir holding a single note, which was achieved by time stretching Porter's (pitched) voice and applying a convolver to it with a "white noise blur" (heavily adjusted). It resulted in that nurturey sort of emotional anime vibe.</p>
+<p>I bit crushed the very beginning of the song, as well as another part of the song that plays the square wave lead. This leads to a more arcade, "worlds" type sound. Which I think is really cool!</p>
+<p>I ran the roformer instrumental stem through finetuned demucs, which can split the track into 4 stems, being: Vocals (which is irrelevant), Other, Bass, and Drums. The track I specifically targeted was the "Other" which contains everything except the others, and usually contains synths, guitars, piano, etc. I put this once at the beginning of the song, and a second time at the beginning of the second chorus, with that one having a sweeping highpass filter to give an "opening up" effect.</p>
+<p>Overall, this took me about 2 ish hours to get right. Mostly the balancing, effects, and getting everything juuuust right!</p>
+<p>The final sound is rich, full, and IMO, it sounds professionally produced and possibly the same level of mastering and production as the original.<br><br>Here is the song! I hope you enjoy it as much as I did making it! :)</p>
+<figure class="post__video"><iframe loading="lazy" width="560" height="314" src="https://www.youtube.com/embed/pEL-m3-1_E0?si=aMPd1U9mKLWEmTCL" allowfullscreen="allowfullscreen" data-mce-fragment="1"></iframe></figure>
+            ]]>
+        </content>
+    </entry>
+    <entry>
+        <title>A Bit About Arnold Palmer</title>
+        <author>
+            <name>Cross</name>
+        </author>
+        <link href="https://dill.moe/a-bit-about-arnold-palmer/"/>
+        <id>https://dill.moe/a-bit-about-arnold-palmer/</id>
+            <category term="Blog"/>
+
+        <updated>2024-02-15T17:14:12-05:00</updated>
+            <summary>
+                <![CDATA[
+                    The Arnold Palmer, a delightful beverage named after the legendary golfer, is&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <figure class="post__image"><img loading="lazy"  src="https://dill.moe/media/posts/5/ARNOLD-PALMER-DRINK-2.jpg" alt="" width="276" height="414" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xs.jpg 320w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-sm.jpg 480w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-md.jpg 768w ,https://dill.moe/media/posts/5/responsive/ARNOLD-PALMER-DRINK-2-xl.jpg 1024w"></figure>
+<p>The Arnold Palmer, a delightful beverage named after the legendary golfer, is a harmonious blend of iced tea and lemonade, creating a symphony of flavors that tantalizes the taste buds and refreshes the spirit. This iconic drink is renowned for its perfect balance of sweetness and tartness, making it an instant favorite among both avid tea drinkers and lemonade enthusiasts alike.</p>
+<p>What makes the Arnold Palmer truly exceptional is its versatility. Whether sipped leisurely on a hot summer day or enjoyed as a revitalizing pick-me-up during any season, this timeless concoction never fails to deliver satisfaction. Its crispness invigorates the senses, while its smooth texture glides over the palate with effortless grace, leaving behind a lingering sensation of pure refreshment.</p>
+<p>Beyond its impeccable taste, the Arnold Palmer carries with it a sense of tradition and nostalgia. Originating as a custom order by Arnold Palmer himself, this beverage has transcended its humble beginnings to become a beloved classic enjoyed by people of all ages across the globe. Its simplicity belies its impact, as it continues to evoke fond memories of lazy afternoons spent with loved ones and cherished moments shared among friends.</p>
+<p>In addition to its irresistible flavor and sentimental value, the Arnold Palmer embodies the essence of relaxation and enjoyment. Whether enjoyed on the golf course, at a picnic, or simply lounging at home, this timeless drink has the remarkable ability to elevate any moment, turning the ordinary into something truly extraordinary. With its enduring popularity and universal appeal, the Arnold Palmer stands as a testament to the enduring power of simplicity and the joy found in life's simplest pleasures.</p>
+            ]]>
+        </content>
+    </entry>
+</feed>

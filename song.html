@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/z90F1JD.jpeg">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>あたしが隣にいるうちに - Player</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --fg: #ffffff;
+      --muted: #b3b3b3;
+      --accent: #1db954;
+      --accent-2: #1ed760;
+      --card: #1e1e1e;
+      --card-2: #242424;
+      --border: #2a2a2a;
+
+      /* Slider fill positions (0%..100%) */
+      --seek-fill: 0%;
+      --vol-fill: 100%;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: radial-gradient(circle at 20% 0%, #0e0e0e, #121212 60%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--fg);
+    }
+
+    .container {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .player {
+      width: min(920px, 92vw);
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .player-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(90deg, rgba(29,185,84,0.07), rgba(29,185,84,0) 60%);
+    }
+
+    .cover {
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(29,185,84,0.35);
+      flex: none;
+    }
+    .cover img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(180deg, #151515 0%, #121212 100%);
+    }
+    canvas#wave {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(29,185,84,0.18));
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      background: #1a1a1a;
+      color: var(--fg);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 0.1s ease, background 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .btn:hover { transform: translateY(-1px) scale(1.02); background: #202020; }
+    .btn:active { transform: translateY(0) scale(0.98); }
+    .btn.play {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #04230f;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(29,185,84,0.35), inset 0 0 0 1px rgba(255,255,255,0.1);
+    }
+
+    .seek {
+      display: grid;
+      grid-template-columns: 52px 1fr 52px;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-size: 0.9rem;
+    }
+
+    /* Base slider styles */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: transparent;
+      outline: none;
+      transition: opacity 0.2s;
+    }
+
+    /* Track (WebKit) with two gradients: green fill on left, neutral on right */
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 6px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, rgba(30,215,96,0.85), rgba(29,185,84,0.95)) 0/ var(--fill, 0%) 100% no-repeat,
+        #2a2a2a;
+      box-shadow: 0 0 14px rgba(30,215,96,0.25) inset;
+    }
+
+    /* Thumb (WebKit) */
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      margin-top: -6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Firefox track */
+    input[type="range"]::-moz-range-track {
+      height: 6px;
+      border-radius: 999px;
+      background: #2a2a2a;
+      box-shadow: 0 0 14px rgba(30,215,96,0.25) inset;
+    }
+
+    /* Firefox progress (left fill) */
+    input[type="range"]::-moz-range-progress {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(30,215,96,0.85), rgba(29,185,84,0.95));
+    }
+
+    /* Firefox thumb */
+    input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: white; border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Specific fill hooks for seek and volume (WebKit) */
+    #seek::-webkit-slider-runnable-track {
+      background:
+        linear-gradient(90deg, rgba(30,215,96,0.9), rgba(29,185,84,1)) 0/ var(--seek-fill) 100% no-repeat,
+        #2a2a2a;
+      box-shadow: 0 0 16px rgba(30,215,96,0.28) inset;
+    }
+    #volume::-webkit-slider-runnable-track {
+      background:
+        linear-gradient(90deg, rgba(30,215,96,0.9), rgba(29,185,84,1)) 0/ var(--vol-fill) 100% no-repeat,
+        #2a2a2a;
+      box-shadow: 0 0 16px rgba(30,215,96,0.28) inset;
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vol {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 160px;
+    }
+    .vol input[type="range"] {
+      width: 120px;
+    }
+
+    .download {
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      color: #0f2a18;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 8px 20px rgba(29,185,84,0.35), inset 0 0 0 1px rgba(255,255,255,0.08);
+      transition: transform 0.1s ease, filter 0.25s ease;
+    }
+    .download:hover { transform: translateY(-1px) scale(1.02); filter: saturate(1.1); }
+    .download:active { transform: translateY(0) scale(0.98); }
+
+    .tip {
+      padding: 10px 18px 18px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 640px) {
+      .controls {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .seek {
+        grid-template-columns: 42px 1fr 42px;
+        font-size: 0.85rem;
+      }
+      .right { justify-content: space-between; }
+      .vol { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="player" role="region" aria-label="Audio player">
+      <div class="player-header">
+        <div class="cover" aria-hidden="true">
+          <img src="https://i.imgur.com/z90F1JD.jpeg" alt="Album art">
+        </div>
+        <div class="meta">
+          <div class="title">あたしが隣にいるうちに</div>
+          <div class="subtitle">by Chiai Fujikawa</div>
+        </div>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="wave"></canvas>
+      </div>
+
+      <div class="controls">
+        <div class="buttons">
+          <button class="btn play" id="playBtn" aria-label="Play/Pause">▶</button>
+          <button class="btn" id="stopBtn" aria-label="Stop">■</button>
+          <button class="btn" id="replayBtn" aria-label="Replay 10s">⟲</button>
+          <button class="btn" id="skipBtn" aria-label="Skip 10s">⟳</button>
+        </div>
+
+        <div class="seek">
+          <div id="currentTime">0:00</div>
+          <input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek"/>
+          <div id="duration">0:00</div>
+        </div>
+
+        <div class="right">
+          <div class="vol">
+            <span aria-hidden="true">🔊</span>
+            <input id="volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume"/>
+          </div>
+          <a class="download" id="downloadBtn" href="https://file.garden/Z5L9imBsKDyHFOQg/Shared/Atashi%20ga%20Tonari%20ni%20Iru%20Uchi%20ni.flac" download>Download</a>
+        </div>
+      </div>
+
+      <div class="tip">
+        If playback doesn’t start, your browser may not support FLAC. You can still download the file.
+      </div>
+    </div>
+  </div>
+
+  <audio id="audio" preload="metadata" crossorigin="anonymous">
+    <source src="https://file.garden/Z5L9imBsKDyHFOQg/Shared/Atashi%20ga%20Tonari%20ni%20Iru%20Uchi%20ni.flac" type="audio/flac"/>
+    Your browser does not support FLAC playback.
+  </audio>
+
+  <script>
+    // Elements
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const replayBtn = document.getElementById('replayBtn');
+    const skipBtn = document.getElementById('skipBtn');
+    const timeCurrent = document.getElementById('currentTime');
+    const timeDuration = document.getElementById('duration');
+    const seek = document.getElementById('seek');
+    const volume = document.getElementById('volume');
+    const canvas = document.getElementById('wave');
+    const ctx = canvas.getContext('2d');
+
+    // Helper to set CSS custom properties for slider fill
+    function setFill(el, percent) {
+      const p = Math.max(0, Math.min(100, percent));
+      if (el === seek) {
+        document.documentElement.style.setProperty('--seek-fill', p + '%');
+      } else if (el === volume) {
+        document.documentElement.style.setProperty('--vol-fill', p + '%');
+      }
+    }
+
+    // Map to a generic --fill when needed (fallback)
+    function updateGenericFill(el, percent) {
+      el.style.setProperty('--fill', percent + '%');
+    }
+
+    // Initialize fills
+    setFill(seek, 0);
+    setFill(volume, 100);
+    updateGenericFill(seek, 0);
+    updateGenericFill(volume, 100);
+
+    // Resize canvas to device pixels
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Web Audio setup
+    let audioCtx, sourceNode, analyser, gainNode;
+    let rafId;
+    let isPlaying = false;
+
+    function initAudioGraph() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      sourceNode = audioCtx.createMediaElementSource(audio);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 2048;
+      analyser.smoothingTimeConstant = 0.88;
+
+      gainNode = audioCtx.createGain();
+
+      sourceNode.connect(analyser);
+      analyser.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+    }
+
+    // Time formatting
+    function fmt(t) {
+      if (!isFinite(t)) return '0:00';
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60).toString().padStart(2, '0');
+      return m + ':' + s;
+    }
+
+    // UI updates
+    audio.addEventListener('loadedmetadata', () => {
+      timeDuration.textContent = fmt(audio.duration);
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      timeCurrent.textContent = fmt(audio.currentTime);
+      if (!isSeeking) {
+        const frac = (audio.currentTime / (audio.duration || 1));
+        const val = frac * 1000;
+        seek.value = isFinite(val) ? val : 0;
+
+        const percent = frac * 100;
+        setFill(seek, percent);
+        updateGenericFill(seek, percent);
+      }
+    });
+
+    audio.addEventListener('ended', () => {
+      isPlaying = false;
+      playBtn.textContent = '▶';
+      cancelAnimationFrame(rafId);
+    });
+
+    // Controls
+    playBtn.addEventListener('click', async () => {
+      initAudioGraph();
+      if (!isPlaying) {
+        try {
+          await audio.play();
+          if (audioCtx.state === 'suspended') await audioCtx.resume();
+          isPlaying = true;
+          playBtn.textContent = '⏸';
+          draw();
+        } catch (e) {
+          console.warn('Playback failed:', e);
+        }
+      } else {
+        audio.pause();
+        isPlaying = false;
+        playBtn.textContent = '▶';
+        cancelAnimationFrame(rafId);
+      }
+    });
+
+    stopBtn.addEventListener('click', () => {
+      audio.pause();
+      audio.currentTime = 0;
+      isPlaying = false;
+      playBtn.textContent = '▶';
+      cancelAnimationFrame(rafId);
+      setFill(seek, 0);
+      updateGenericFill(seek, 0);
+    });
+
+    replayBtn.addEventListener('click', () => {
+      audio.currentTime = Math.max(0, audio.currentTime - 10);
+    });
+
+    skipBtn.addEventListener('click', () => {
+      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10);
+    });
+
+    // Volume
+    function updateVolumeFill() {
+      const v = parseFloat(volume.value);
+      const percent = v * 100;
+      setFill(volume, percent);
+      updateGenericFill(volume, percent);
+    }
+    volume.addEventListener('input', () => {
+      if (!audioCtx) initAudioGraph();
+      const v = parseFloat(volume.value);
+      audio.volume = v;
+      if (gainNode) gainNode.gain.value = v;
+      updateVolumeFill();
+    });
+    updateVolumeFill();
+
+    // Seek
+    let isSeeking = false;
+    seek.addEventListener('input', () => {
+      isSeeking = true;
+      const t = (seek.value / 1000) * (audio.duration || 0);
+      timeCurrent.textContent = fmt(t);
+
+      const percent = (seek.value / 1000) * 100;
+      setFill(seek, percent);
+      updateGenericFill(seek, percent);
+    });
+    seek.addEventListener('change', () => {
+      const t = (seek.value / 1000) * (audio.duration || 0);
+      audio.currentTime = t;
+      isSeeking = false;
+    });
+
+    // Waveform drawing
+    function draw() {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+
+      const g = ctx.createLinearGradient(0, 0, 0, h);
+      g.addColorStop(0, 'rgba(29,185,84,0.18)');
+      g.addColorStop(1, 'rgba(29,185,84,0.02)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+
+      if (!analyser) {
+        rafId = requestAnimationFrame(draw);
+        return;
+      }
+
+      const bufferLength = analyser.fftSize;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteTimeDomainData(dataArray);
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#1ed760';
+      ctx.beginPath();
+
+      const slice = w / bufferLength;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const v = dataArray[i] / 128.0 - 1.0; // [-1, 1]
+        const y = h / 2 + v * (h * 0.38);
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+        x += slice;
+      }
+      ctx.stroke();
+
+      // Fill under curve
+      ctx.lineTo(w, h * 0.75);
+      ctx.lineTo(0, h * 0.75);
+      ctx.closePath();
+      const fill = ctx.createLinearGradient(0, h * 0.25, 0, h);
+      fill.addColorStop(0, 'rgba(30,215,96,0.18)');
+      fill.addColorStop(1, 'rgba(30,215,96,0.03)');
+      ctx.fillStyle = fill;
+      ctx.fill();
+
+      // Progress overlay line
+      if (isFinite(audio.currentTime) && isFinite(audio.duration) && audio.duration > 0) {
+        const progressX = (audio.currentTime / audio.duration) * w;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 6]);
+        ctx.beginPath();
+        ctx.moveTo(progressX, 0);
+        ctx.lineTo(progressX, h);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      rafId = requestAnimationFrame(draw);
+    }
+
+    // Pause visual when tab hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+      } else if (isPlaying) {
+        draw();
+      }
+    });
+
+    // Unlock audio on first user interaction (mobile)
+    window.addEventListener('click', () => {
+      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }, { once: true });
+  </script>
+</body>
+</html>

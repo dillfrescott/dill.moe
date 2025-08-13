@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dill Stream Manifest URL</title>
+  <style>
+    :root{
+      --bg: #0b0f16;
+      --bg-accent: #0f1522;
+      --card: #121826;
+      --muted: #8a94a7;
+      --text: #e7ecf3;
+      --url-bg: #0a1220;
+      --url-border: #1f2a3d;
+      --green: #22c55e;
+      --green-600:#16a34a;
+      --ring: rgba(34,197,94,.35);
+      --shadow: 0 10px 25px rgba(0,0,0,.45), 0 2px 6px rgba(0,0,0,.25);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(34,197,94,.08), transparent 60%),
+        radial-gradient(1000px 500px at 90% 110%, rgba(59,130,246,.08), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+    .card{
+      width:min(920px, 92vw);
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)) , var(--card);
+      border:1px solid rgba(255,255,255,.05);
+      border-radius:calc(var(--radius) + 4px);
+      box-shadow:var(--shadow);
+      padding:28px 28px 24px 28px;
+      backdrop-filter:saturate(120%) blur(6px);
+    }
+    h1{
+      margin:0 0 18px;
+      font-weight:700;
+      letter-spacing:.2px;
+      font-size:clamp(20px, 3.2vw, 28px);
+    }
+    p.lead{margin:0 0 18px; color:var(--muted)}
+    .url-wrap{
+      position:relative;
+      background:linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.24)) , var(--url-bg);
+      border:1px solid var(--url-border);
+      border-radius:var(--radius);
+      padding:18px 18px;
+      overflow:auto;
+      max-height:240px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+    }
+    code, .url{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .url{white-space:pre-wrap; word-break:break-all; line-height:1.5}
+
+    .actions{display:flex; gap:12px; align-items:center; margin-top:14px}
+
+    .btn{
+      appearance:none; border:0; cursor:pointer; user-select:none; -webkit-tap-highlight-color: transparent;
+      background:linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,0)) , var(--green);
+      color:#06110b; font-weight:700; letter-spacing:.2px;
+      padding:12px 16px; border-radius:999px; box-shadow:0 6px 18px rgba(34,197,94,.25);
+      transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
+      display:inline-flex; align-items:center; font-size:15px;
+    }
+    .btn:hover{filter:brightness(.98)}
+    .btn:active{transform:translateY(1px)}
+    .btn:focus-visible{outline:none; box-shadow:0 0 0 6px var(--ring)}
+
+    .hint{font-size:12px; color:var(--muted)}
+
+    .copied{
+      animation: pop .25s ease both;
+    }
+    @keyframes pop{0%{transform:scale(.98)} 70%{transform:scale(1.03)} 100%{transform:scale(1)}}
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Dill Stream manifest url</h1>
+    <p class="lead">Copy the manifest URL below and paste it into your Stremio configuration.</p>
+
+    <section class="url-wrap" aria-label="Manifest URL">
+      <code id="manifest-url" class="url">https://aiostreams.dill.moe/stremio/9b64e530-419b-4e6a-90a5-4b629daf02b8/eyJpdiI6IjZaUiswemI0cWtPVkk0TFRLQU5ObFE9PSIsImVuY3J5cHRlZCI6IlI5cVZtMzZ6SkFTc3AxblMvUmJUM0VRSmVjbDd4QUdmNUttb2RCWEM1QjRvR3JLZDZReXdvVWlRRDAzaGRZWXUiLCJ0eXBlIjoiYWlvRW5jcnlwdCJ9/manifest.json</code>
+    </section>
+
+    <div class="actions">
+      <button id="copyBtn" class="btn" aria-live="polite">
+        <span id="copyText">Click to copy</span>
+      </button>
+      <span class="hint" id="copyHint" aria-live="polite">Copies the URL to your clipboard</span>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const $btn   = document.getElementById('copyBtn');
+      const $text  = document.getElementById('copyText');
+      const $hint  = document.getElementById('copyHint');
+      const $urlEl = document.getElementById('manifest-url');
+
+      async function copy() {
+        const url = $urlEl.textContent.trim();
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(url);
+          } else {
+            const area = document.createElement('textarea');
+            area.value = url;
+            area.setAttribute('readonly', '');
+            area.style.position = 'absolute';
+            area.style.left = '-9999px';
+            document.body.appendChild(area);
+            area.select();
+            document.execCommand('copy');
+            document.body.removeChild(area);
+          }
+          $btn.classList.add('copied');
+          $text.textContent = 'Copied!';
+          $hint.textContent = 'URL copied to clipboard';
+          setTimeout(()=>{
+            $btn.classList.remove('copied');
+            $text.textContent = 'Click to copy';
+            $hint.textContent = 'Copies the URL to your clipboard';
+          }, 1800);
+        } catch (e) {
+          console.error(e);
+          $hint.textContent = 'Unable to copy automatically. Please select and copy.';
+        }
+      }
+
+      $btn.addEventListener('click', copy);
+    })();
+  </script>
+</body>
+</html>
